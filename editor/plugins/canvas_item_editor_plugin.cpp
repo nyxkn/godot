@@ -4967,8 +4967,9 @@ CanvasItemEditor::CanvasItemEditor() {
 	add_child(main_flow);
 
 	// Main toolbars.
-	HBoxContainer *main_menu_hbox = memnew(HBoxContainer);
+	HFlowContainer *main_menu_hbox = memnew(HFlowContainer);
 	main_menu_hbox->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+	main_menu_hbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	main_flow->add_child(main_menu_hbox);
 
 	bottom_split = memnew(VSplitContainer);

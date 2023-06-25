@@ -36,6 +36,8 @@
 #include "editor/editor_folding.h"
 #include "editor/editor_plugin.h"
 
+#include "scene/gui/flow_container.h"
+
 typedef void (*EditorNodeInitCallback)();
 typedef void (*EditorPluginInitializeCallback)();
 typedef bool (*EditorBuildCallback)();
@@ -445,7 +447,7 @@ private:
 	Vector<BottomPanelItem> bottom_panel_items;
 	PanelContainer *bottom_panel = nullptr;
 	HBoxContainer *bottom_panel_hb = nullptr;
-	HBoxContainer *bottom_panel_hb_editors = nullptr;
+	HFlowContainer *bottom_panel_hb_editors = nullptr;
 	VBoxContainer *bottom_panel_vb = nullptr;
 	EditorToaster *editor_toaster = nullptr;
 	LinkButton *version_btn = nullptr;
