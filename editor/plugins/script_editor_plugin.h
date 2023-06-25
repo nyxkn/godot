@@ -34,6 +34,7 @@
 #include "editor/editor_plugin.h"
 #include "scene/gui/dialogs.h"
 #include "scene/gui/panel_container.h"
+#include "scene/gui/flow_container.h"
 #include "scene/resources/syntax_highlighter.h"
 #include "scene/resources/text_file.h"
 
@@ -259,7 +260,7 @@ class ScriptEditor : public PanelContainer {
 		DISPLAY_FULL_PATH,
 	};
 
-	HBoxContainer *menu_hb = nullptr;
+	HFlowContainer *menu_hb = nullptr;
 	MenuButton *file_menu = nullptr;
 	MenuButton *edit_menu = nullptr;
 	MenuButton *script_search_menu = nullptr;

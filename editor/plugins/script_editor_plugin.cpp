@@ -3790,7 +3790,8 @@ ScriptEditor::ScriptEditor(WindowWrapper *p_wrapper) {
 	VBoxContainer *main_container = memnew(VBoxContainer);
 	add_child(main_container);
 
-	menu_hb = memnew(HBoxContainer);
+	menu_hb = memnew(HFlowContainer);
+	menu_hb->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	main_container->add_child(menu_hb);
 
 	script_split = memnew(HSplitContainer);
@@ -3874,7 +3875,7 @@ ScriptEditor::ScriptEditor(WindowWrapper *p_wrapper) {
 
 	tab_container = memnew(TabContainer);
 	tab_container->set_tabs_visible(false);
-	tab_container->set_custom_minimum_size(Size2(200, 0) * EDSCALE);
+	// tab_container->set_custom_minimum_size(Size2(200, 0) * EDSCALE);
 	code_editor_container->add_child(tab_container);
 	tab_container->set_h_size_flags(SIZE_EXPAND_FILL);
 	tab_container->set_v_size_flags(SIZE_EXPAND_FILL);
@@ -3973,7 +3974,7 @@ ScriptEditor::ScriptEditor(WindowWrapper *p_wrapper) {
 	debugger->get_default_debugger()->connect("set_breakpoint", callable_mp(this, &ScriptEditor::_set_breakpoint));
 	debugger->get_default_debugger()->connect("clear_breakpoints", callable_mp(this, &ScriptEditor::_clear_breakpoints));
 
-	menu_hb->add_spacer();
+	// menu_hb->add_spacer();
 
 	script_icon = memnew(TextureRect);
 	menu_hb->add_child(script_icon);
@@ -3983,7 +3984,7 @@ ScriptEditor::ScriptEditor(WindowWrapper *p_wrapper) {
 	script_icon->hide();
 	script_name_label->hide();
 
-	menu_hb->add_spacer();
+	// menu_hb->add_spacer();
 
 	site_search = memnew(Button);
 	site_search->set_flat(true);
