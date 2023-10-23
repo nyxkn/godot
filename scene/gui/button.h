@@ -39,6 +39,7 @@ class Button : public BaseButton {
 
 private:
 	bool flat = false;
+	bool hover_is_overlay = false;
 	String text;
 	String xl_text;
 	Ref<TextParagraph> text_buf;
@@ -130,6 +131,9 @@ public:
 
 	void set_flat(bool p_enabled);
 	bool is_flat() const;
+
+	void set_hover_is_overlay(bool p_enabled);
+	bool is_hover_is_overlay() const;
 
 	void set_clip_text(bool p_enabled);
 	bool get_clip_text() const;

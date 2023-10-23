@@ -157,8 +157,21 @@ void Button::_notification(int p_what) {
 					}
 
 					if (!flat) {
-						style->draw(ci, Rect2(Point2(0, 0), size));
+						if (hover_is_overlay) {
+							// draw normal instead of hover, so that hover will be drawn on top later
+							// this makes it so that draw_hover acts the same as draw_normal
+							Ref<StyleBox> style_normal;
+							if (rtl && has_theme_stylebox(SNAME("normal_mirrored"))) {
+								style_normal = theme_cache.normal_mirrored;
+							} else {
+								style_normal = theme_cache.normal;
+							}
+							style_normal->draw(ci, Rect2(Point2(0, 0), size));
+						} else {
+							style->draw(ci, Rect2(Point2(0, 0), size));
+						}
 					}
+
 					color = theme_cache.font_hover_color;
 					if (has_theme_color(SNAME("icon_hover_color"))) {
 						color_icon = theme_cache.icon_hover_color;
@@ -183,6 +196,11 @@ void Button::_notification(int p_what) {
 					}
 
 				} break;
+			}
+
+			if (hover_is_overlay && get_draw_mode() == DRAW_HOVER) {
+				Ref<StyleBox> style2 = theme_cache.hover;
+				style2->draw(ci, Rect2(Point2(), size));
 			}
 
 			if (has_focus()) {
@@ -547,6 +565,17 @@ bool Button::is_flat() const {
 	return flat;
 }
 
+void Button::set_hover_is_overlay(bool p_enabled) {
+	if (hover_is_overlay != p_enabled) {
+		hover_is_overlay = p_enabled;
+		queue_redraw();
+	}
+}
+
+bool Button::is_hover_is_overlay() const {
+	return hover_is_overlay;
+}
+
 void Button::set_clip_text(bool p_enabled) {
 	if (clip_text != p_enabled) {
 		clip_text = p_enabled;
@@ -603,6 +632,8 @@ void Button::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_button_icon"), &Button::get_icon);
 	ClassDB::bind_method(D_METHOD("set_flat", "enabled"), &Button::set_flat);
 	ClassDB::bind_method(D_METHOD("is_flat"), &Button::is_flat);
+	ClassDB::bind_method(D_METHOD("set_hover_is_overlay", "enabled"), &Button::set_hover_is_overlay);
+	ClassDB::bind_method(D_METHOD("is_hover_is_overlay"), &Button::is_hover_is_overlay);
 	ClassDB::bind_method(D_METHOD("set_clip_text", "enabled"), &Button::set_clip_text);
 	ClassDB::bind_method(D_METHOD("get_clip_text"), &Button::get_clip_text);
 	ClassDB::bind_method(D_METHOD("set_text_alignment", "alignment"), &Button::set_text_alignment);
@@ -617,6 +648,7 @@ void Button::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "text", PROPERTY_HINT_MULTILINE_TEXT), "set_text", "get_text");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "icon", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_button_icon", "get_button_icon");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "flat"), "set_flat", "is_flat");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "hover_is_overlay"), "set_hover_is_overlay", "is_hover_is_overlay");
 
 	ADD_GROUP("Text Behavior", "");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "alignment", PROPERTY_HINT_ENUM, "Left,Center,Right"), "set_text_alignment", "get_text_alignment");
